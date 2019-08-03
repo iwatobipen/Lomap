@@ -664,12 +664,13 @@ class GraphGen(object):
                         # I assumed that the score matrix is symmetric. In the Graph part this does not seems to be true: <<<<<<<<<<<<<DEBUG>>>>>>>>>>>>>>>
                         # similarity = self.dbase.loose_mtx[nodesOfI[k],nodesOfJ[l]]
                         similarity = self.dbase.loose_mtx[nodesOfI[k]['ID'],nodesOfJ[l]['ID']]
-                        if similarity > 0.0 :
+                        print(similarity)
+                        print('$$$')
+                        if similarity >= 0.0 : # cahnged from > to >=
                             edgesToCheck.append((nodesOfI[k]['ID'], nodesOfJ[l]['ID'], similarity))
                             edgesToCheckAdditionalInfo.append((nodesOfI[k]['ID'], nodesOfJ[l]['ID'], similarity, i, j))
                         else :
                             numzeros = numzeros + 1
-
 
         if len(edgesToCheck) > 0:
 
