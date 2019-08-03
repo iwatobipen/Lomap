@@ -55,7 +55,9 @@ from rdkit.Chem import Draw
 from rdkit.Chem import AllChem
 import os.path
 import logging
-from PyQt4 import QtGui
+# from PyQt4 import QtGui
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 import tempfile
 import shutil
 
@@ -652,18 +654,19 @@ class GraphGen(object):
 
                 nodesOfJ = self.workingSubgraphsList[j].nodes()
 
-                for k in range(0,len(nodesOfI)):
-
-                    for l in range(0,len(nodesOfJ)):
+                #for k in range(0,len(nodesOfI)):
+                for k in nodesOfI:
+                    #for l in range(0,len(nodesOfJ)):
+                    for l in nodesOfJ:
                         """produce an edge from nodesOfI[k] and nodesofJ[l] if nonzero weights push this edge into possibleEdgeList """
+                        #print('Molecules (%d,%d)' % (nodesOfI[k]['ID'],nodesOfJ[l]['ID'])) 
 
-                        #print 'Molecules (%d,%d)' % (nodesOfI[k],nodesOfJ[l])
                         # I assumed that the score matrix is symmetric. In the Graph part this does not seems to be true: <<<<<<<<<<<<<DEBUG>>>>>>>>>>>>>>>
-                        similarity = self.dbase.loose_mtx[nodesOfI[k],nodesOfJ[l]]
-                        
+                        # similarity = self.dbase.loose_mtx[nodesOfI[k],nodesOfJ[l]]
+                        similarity = self.dbase.loose_mtx[nodesOfI[k]['ID'],nodesOfJ[l]['ID']]
                         if similarity > 0.0 :
-                            edgesToCheck.append((nodesOfI[k], nodesOfJ[l], similarity))
-                            edgesToCheckAdditionalInfo.append((nodesOfI[k], nodesOfJ[l], similarity, i, j))
+                            edgesToCheck.append((nodesOfI[k]['ID'], nodesOfJ[l]['ID'], similarity))
+                            edgesToCheckAdditionalInfo.append((nodesOfI[k]['ID'], nodesOfJ[l]['ID'], similarity, i, j))
                         else :
                             numzeros = numzeros + 1
 
@@ -719,18 +722,19 @@ class GraphGen(object):
 
                 #print '(%d,%d)' % (i,j)
                 
-                for k in range(0,len(nodesOfI)):
+                #for k in range(0,len(nodesOfI)):
+                for k in nodesOfI:
 
-                    for l in range(0,len(nodesOfJ)):
-
+                    #for l in range(0,len(nodesOfJ)):
+                    for l in nodesOfJ:
                         """produce an edge from nodesOfI[k] and nodesofJ[l] if nonzero weights push this edge into possibleEdgeList """
 
                         #print 'Molecules (%d,%d)' % (nodesOfI[k],nodesOfJ[l])
                         # I assumed that the score matrix is symmetric. In the Graph part this does not seems to be true: <<<<<<<<<<<<<DEBUG>>>>>>>>>>>>>>>
-                        similarity = self.dbase.loose_mtx[nodesOfI[k],nodesOfJ[l]]
+                        similarity = self.dbase.loose_mtx[nodesOfI[k]['ID'],nodesOfJ[l]['ID']]
                         
                         if (similarity > 0.0):
-                            edgesToCheck.append((nodesOfI[k], nodesOfJ[l], similarity))
+                            edgesToCheck.append((nodesOfI[k]['ID'], nodesOfJ[l]['ID'], similarity))
 
         finalEdgesToCheck = [edge for edge in edgesToCheck if edge not in self.edgesAddedInFirstTreePass]
 
@@ -960,7 +964,8 @@ class GraphGen(object):
 
 
         # Determine the screen resolution by using PyQt4 
-        app = QtGui.QApplication([])
+        # app = QtGui.QApplication([])
+        app = QtWidgets.QApplication([])
         screen_resolution = app.desktop().screenGeometry()
         
         # Canvas scale factor 

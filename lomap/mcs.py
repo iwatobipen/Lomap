@@ -354,7 +354,6 @@ class MCS(object):
                                  ringMatchesRingOnly=True, 
                                  completeRingsOnly=False, 
                                  matchChiralTag=False)
-
         # Checking
         if mcs.canceled:
             raise ValueError('Timeout! No MCS found between passed molecules')
@@ -385,13 +384,11 @@ class MCS(object):
             molj_sub = molj_c.GetSubstructMatch(mcs_mol)
         else:
             raise ValueError('RDkit MCS Subgraph second molecule search failed')
-             
-            
         if mcs_mol.HasSubstructMatch(mcs_mol):
             mcs_sub = mcs_mol.GetSubstructMatch(mcs_mol)
         else:
-            raise ValueError('RDkit MCS Subgraph search failed')
-        
+            #raise ValueError('RDkit MCS Subgraph search failed')
+            mcs_sub = []
                
         # Map between the two molecules
         map_moli_to_molj = zip(moli_sub, molj_sub)

@@ -672,7 +672,6 @@ class SMatrix(np.ndarray):
 
         elif len(kargs[0]) > 2:
             raise ValueError('Two indices can be addressed')
-                
         i = kargs[0][0]
         j = kargs[0][1]
 
